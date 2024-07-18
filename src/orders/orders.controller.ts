@@ -20,8 +20,19 @@ export class OrdersController {
   }
 
   @Get()
-  findAll(@Query() orderpaginationDto: OrderPaginationDto) {
-    return this.client.send('findAllOrders',  orderpaginationDto );
+  async findAll(@Query() orderpaginationDto: OrderPaginationDto) {
+
+  try {
+
+    const orders= await firstValueFrom(
+     this.client.send('findAllOrders',  orderpaginationDto )
+
+    )
+    return orders;
+  } catch (error) {
+    
+  }
+  
   }
 
   @Get('id/:id')
